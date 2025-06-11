@@ -12,18 +12,11 @@ const getRanHex = size => {
   return result.join('');
 }
 
-let n = 0;
-
-mainBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+const scroll = (e) => {
+  e.preventDefault();
     let main = document.querySelectorAll('.color');
     console.log(`Modifying element at index ${n}:`, main[n]);
-    if (n < main.length) {
-        main[n].style.backgroundColor = `#${getRanHex(6)}`;
-        n += 1;
-    } else {
-        console.warn('Index out of bounds: No more elements to update.');
-    }
+    
 
     const newApp = document.createElement('div');
     newApp.className = 'app';
@@ -35,6 +28,8 @@ mainBtn.addEventListener('click', (e) => {
     const fragment = document.createDocumentFragment();
     fragment.appendChild(newApp);
     document.body.appendChild(fragment);
+    newColor.style.backgroundColor = `#${getRanHex(6)}`;
+    n += 1;
 
     likeBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -43,4 +38,13 @@ mainBtn.addEventListener('click', (e) => {
     });
 
     window.scrollTo(0, window.innerHeight * (n));
-})
+}
+
+let n = 1;
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown'){
+      scroll(e);
+    }
+});
+
+mainBtn.addEventListener('click', (e) => {scroll(e);});
